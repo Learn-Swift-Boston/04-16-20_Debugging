@@ -18,10 +18,10 @@ struct CurrentWeather {
     let windSpeed: Double
     let iconId: String
     
-    init(from json: JSON) {
-        let main = json["main"] as! JSON
-        let weather = (json["weather"] as! [JSON]).first!
-        let wind = json["wind"] as! JSON
+    init?(from json: JSON) {
+        guard let main = json["main"] as? JSON,
+            let weather = (json["weather"] as? [JSON])?.first,
+            let wind = json["wind"] as? JSON else { return nil }
         
         self.cityName = json["name"] as! String
         self.condition = weather["description"] as! String

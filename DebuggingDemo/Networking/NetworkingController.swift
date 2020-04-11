@@ -15,9 +15,9 @@ enum Endpoint {
     func composedURL() -> URL {
         switch self {
         case .current(let lat, let lon):
-            return URL(string: "api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)&units=imperial")!
+            return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)&units=imperial")!
         case .icon(let id):
-            return URL(string: "http://openweathermap.org/img/wn/\(id)@2x.png")!
+            return URL(string: "https://openweathermap.org/img/wn/\(id)@2x.png")!
         }
     }
 }
@@ -40,7 +40,10 @@ struct NetworkingController {
                 return
             }
             
-            let currentWeather = CurrentWeather(from: json)
+            guard let currentWeather = CurrentWeather(from: json) else {
+                completion(.failure(NetworkingError()))
+                return
+            }
             
             completion(.success(currentWeather))
             
