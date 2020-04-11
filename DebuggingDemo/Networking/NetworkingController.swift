@@ -10,15 +10,40 @@ import Foundation
 
 enum Endpoint {
     case current(lat: Double, lon: Double)
+    case icon(id: String)
     
     func composedURL() -> URL {
         switch self {
         case .current(let lat, let lon):
-            return URL(string: "api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)")!
+            return URL(string: "api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)&units=imperial")!
+        case .icon(let id):
+            return URL(string: "http://openweathermap.org/img/wn/\(id)@2x.png")!
         }
     }
 }
 
+struct NetworkingError: Error {}
+
 struct NetworkingController {
-    
+    func getCurrentWeather(latitude: Double, longitude: Double, completion: @escaping (Result<CurrentWeather, Error>) -> Void) {
+        
+        let request = URLRequest.init(url: Endpoint.current(lat: latitude, lon: longitude).composedURL())
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                completion(.failure(error!))
+                return
+            }
+            
+            guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? JSON else {
+                completion(.failure(NetworkingError()))
+                return
+            }
+            
+            let currentWeather = CurrentWeather(from: json)
+            
+            completion(.success(currentWeather))
+            
+        }.resume()
+    }
 }
