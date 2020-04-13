@@ -34,6 +34,36 @@ class CurrentViewController: UIViewController {
         }
     }
     
+    func fetchCurrentConditions(forLatitude latitude: Double, longitude: Double) {
+        NetworkingController().getCurrentWeather(latitude: latitude, longitude: longitude) { (result) in
+            switch result {
+            case .failure(_):
+                self.shouldFetchLocation = true
+            case .success(let weather):
+                DispatchQueue.main.async {
+                    self.cityLabel.text = weather.cityName
+                    self.conditionLabel.text = weather.condition
+                    self.feelsLike.text = "\(weather.feelsLike)"
+                    self.windSpeed.text = "\(weather.windSpeed)"
+                }
+                self.fetchIcon(id: weather.iconId)
+            }
+        }
+    }
+    
+    func fetchIcon(id: String) {
+        NetworkingController().getConditionIcon(id: id) { result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.iconImageView.image = image
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }
 
 extension CurrentViewController: CLLocationManagerDelegate {
@@ -47,19 +77,7 @@ extension CurrentViewController: CLLocationManagerDelegate {
         mapView.setRegion(mRegion, animated: true)
         shouldFetchLocation = false
         
-        NetworkingController().getCurrentWeather(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude) { (result) in
-            switch result {
-            case .failure(_):
-                self.shouldFetchLocation = true
-            case .success(let weather):
-                DispatchQueue.main.async {
-                    self.cityLabel.text = weather.cityName
-                    self.conditionLabel.text = weather.condition
-                    self.feelsLike.text = "\(weather.feelsLike)"
-                    self.windSpeed.text = "\(weather.windSpeed)"
-                }
-            }
-        }
+        fetchCurrentConditions(forLatitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

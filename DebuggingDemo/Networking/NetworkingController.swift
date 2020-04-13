@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 enum Endpoint {
     case current(lat: Double, lon: Double)
@@ -19,7 +19,7 @@ struct NetworkingError: Error {}
 struct NetworkingController {
     func getCurrentWeather(latitude: Double, longitude: Double, completion: @escaping (Result<CurrentWeather, Error>) -> Void) {
         
-        let request = URLRequest.init(url: Endpoint.current(lat: 42.3601, lon: -71.0589).composedURL())
+        let request = URLRequest(url: Endpoint.current(lat: latitude, lon: longitude).composedURL())
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
@@ -40,5 +40,23 @@ struct NetworkingController {
             completion(.success(currentWeather))
             
         }.resume()
+    }
+    
+    func getConditionIcon(id: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let request = URLRequest(url: Endpoint.icon(id: id).composedURL())
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                completion(.failure(error!))
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(.failure(NetworkingError()))
+                return
+            }
+            
+            completion(.success(image))
+        }
     }
 }
