@@ -1,11 +1,3 @@
-//
-//  File.swift
-//  DebuggingDemo
-//
-//  Created by Matthew Dias on 4/11/20.
-//  Copyright © 2020 Matthew Dias. All rights reserved.
-//
-
 import Foundation
 
 enum Endpoint {
@@ -27,7 +19,7 @@ struct NetworkingError: Error {}
 struct NetworkingController {
     func getCurrentWeather(latitude: Double, longitude: Double, completion: @escaping (Result<CurrentWeather, Error>) -> Void) {
         
-        let request = URLRequest.init(url: Endpoint.current(lat: latitude, lon: longitude).composedURL())
+        let request = URLRequest.init(url: Endpoint.current(lat: 42.3601, lon: -71.0589).composedURL())
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
