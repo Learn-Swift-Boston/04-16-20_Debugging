@@ -10,7 +10,7 @@
         <!--Current Conditions-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CurrentViewController" customModule="DebuggingDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Current Weather" id="BYZ-38-t0r" customClass="CurrentViewController" customModule="DebuggingDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,14 +113,14 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="KQu-w4-mgy"/>
-                        <segue destination="nhc-DR-IaM" kind="relationship" relationship="viewControllers" id="Wkz-XV-OzR"/>
+                        <segue destination="MM8-zh-feA" kind="relationship" relationship="viewControllers" id="Wkz-XV-OzR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="447-5H-G6p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
         </scene>
-        <!--5 Day-->
+        <!--Five Day View Controller-->
         <scene sceneID="NbG-s4-geW">
             <objects>
                 <viewController id="nhc-DR-IaM" customClass="FiveDayViewController" customModule="DebuggingDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -128,12 +128,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="MpN-gR-kUT">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
+                            <searchBar contentMode="redraw" placeholder="US Postal Code" translatesAutoresizingMaskIntoConstraints="NO" id="MpN-gR-kUT">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits" textContentType="postal-code"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wfv-QB-AeD">
-                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="669"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
@@ -149,7 +149,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pIe-LS-lly"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="5 Day" id="I3d-Ly-EpO"/>
+                    <navigationItem key="navigationItem" id="0HV-u0-ANJ"/>
                     <connections>
                         <outlet property="searchBar" destination="MpN-gR-kUT" id="sPg-Gm-eo3"/>
                         <outlet property="tableView" destination="wfv-QB-AeD" id="a50-tb-76Q"/>
@@ -157,7 +157,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VA5-BW-KRx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1122" y="465"/>
+            <point key="canvasLocation" x="2031.8840579710147" y="464.73214285714283"/>
+        </scene>
+        <!--5 Day-->
+        <scene sceneID="5io-sF-LiD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MM8-zh-feA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="5 Day" id="I3d-Ly-EpO"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Euk-Kq-6w6">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nhc-DR-IaM" kind="relationship" relationship="rootViewController" id="VhJ-eN-fOw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k0Y-Q6-mEi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1121.7391304347827" y="464.73214285714283"/>
         </scene>
     </scenes>
 </document>

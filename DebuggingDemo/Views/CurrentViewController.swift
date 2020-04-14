@@ -13,6 +13,18 @@ class CurrentViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var shouldFetchLocation = true
+    var currentWeather: CurrentWeather? {
+        didSet {
+            guard let currentWeather = currentWeather else { return }
+            
+            DispatchQueue.main.async {
+                self.cityLabel.text = currentWeather.cityName
+                self.conditionLabel.text = currentWeather.condition
+                self.feelsLike.text = "\(currentWeather.feelsLike)"
+                self.windSpeed.text = "\(currentWeather.windSpeed)"
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +52,7 @@ class CurrentViewController: UIViewController {
             case .failure(_):
                 self.shouldFetchLocation = true
             case .success(let weather):
-                DispatchQueue.main.async {
-                    self.cityLabel.text = weather.cityName
-                    self.conditionLabel.text = weather.condition
-                    self.feelsLike.text = "\(weather.feelsLike)"
-                    self.windSpeed.text = "\(weather.windSpeed)"
-                }
+                self.currentWeather = weather
                 self.fetchIcon(id: weather.iconId)
             }
         }

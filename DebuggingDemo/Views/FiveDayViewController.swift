@@ -14,11 +14,6 @@ class FiveDayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        tableView.delegate = self
-        tableView.dataSource = self
-        searchBar.delegate = self
         
         tableView.tableFooterView = UIView()
     }
@@ -40,7 +35,15 @@ extension FiveDayViewController: UISearchBarDelegate {
 }
 
 extension FiveDayViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row < dayWeathers.count else { return }
+        guard let conditionViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(identifier: "Current Weather") as? CurrentViewController else { return }
+        
+        conditionViewController.shouldFetchLocation = false
+        conditionViewController.currentWeather = dayWeathers[indexPath.row].condition
+        
+        navigationController?.pushViewController(conditionViewController, animated: true)
+    }
 }
 
 extension FiveDayViewController: UITableViewDataSource {
@@ -49,6 +52,15 @@ extension FiveDayViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        
+        guard indexPath.row < dayWeathers.count else {
+            return cell
+        }
+        
+        cell.textLabel?.text = dayWeathers[indexPath.row].date
+        cell.detailTextLabel?.text = dayWeathers[indexPath.row].condition.condition
+        
+        return cell
     }
 }
