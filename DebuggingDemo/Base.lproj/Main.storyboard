@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Current Conditions-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CurrentViewController" customModule="DebuggingDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -88,7 +88,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="P54-4a-3ol"/>
+                    <tabBarItem key="tabBarItem" title="Current Conditions" id="P54-4a-3ol"/>
                     <connections>
                         <outlet property="cityLabel" destination="fg3-bR-OmH" id="rc8-2G-fQr"/>
                         <outlet property="conditionLabel" destination="zZB-17-fl1" id="lbr-F6-uhm"/>
@@ -100,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="138.61607142857142"/>
+            <point key="canvasLocation" x="1123" y="-214"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ocm-1o-LRD">
@@ -113,11 +113,51 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="KQu-w4-mgy"/>
+                        <segue destination="nhc-DR-IaM" kind="relationship" relationship="viewControllers" id="Wkz-XV-OzR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="447-5H-G6p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+        </scene>
+        <!--5 Day-->
+        <scene sceneID="NbG-s4-geW">
+            <objects>
+                <viewController id="nhc-DR-IaM" customClass="FiveDayViewController" customModule="DebuggingDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FWF-Vb-q0W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="MpN-gR-kUT">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wfv-QB-AeD">
+                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wfv-QB-AeD" firstAttribute="top" secondItem="MpN-gR-kUT" secondAttribute="bottom" id="H05-yh-JY7"/>
+                            <constraint firstItem="pIe-LS-lly" firstAttribute="bottom" secondItem="wfv-QB-AeD" secondAttribute="bottom" id="H93-La-TFr"/>
+                            <constraint firstItem="MpN-gR-kUT" firstAttribute="trailing" secondItem="pIe-LS-lly" secondAttribute="trailing" id="Psh-8A-LRp"/>
+                            <constraint firstItem="wfv-QB-AeD" firstAttribute="leading" secondItem="pIe-LS-lly" secondAttribute="leading" id="ZEy-77-Pjd"/>
+                            <constraint firstItem="MpN-gR-kUT" firstAttribute="top" secondItem="pIe-LS-lly" secondAttribute="top" id="bFS-WT-T7p"/>
+                            <constraint firstItem="pIe-LS-lly" firstAttribute="trailing" secondItem="wfv-QB-AeD" secondAttribute="trailing" id="fKE-Vv-0g5"/>
+                            <constraint firstItem="MpN-gR-kUT" firstAttribute="leading" secondItem="pIe-LS-lly" secondAttribute="leading" id="zXw-Fb-L1W"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pIe-LS-lly"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="5 Day" id="I3d-Ly-EpO"/>
+                    <connections>
+                        <outlet property="searchBar" destination="MpN-gR-kUT" id="sPg-Gm-eo3"/>
+                        <outlet property="tableView" destination="wfv-QB-AeD" id="a50-tb-76Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VA5-BW-KRx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1122" y="465"/>
         </scene>
     </scenes>
 </document>

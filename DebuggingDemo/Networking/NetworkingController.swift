@@ -3,6 +3,7 @@ import UIKit
 enum Endpoint {
     case current(lat: Double, lon: Double)
     case icon(id: String)
+    case fiveDay(zipcode: Int)
     
     func composedURL() -> URL {
         switch self {
@@ -10,6 +11,8 @@ enum Endpoint {
             return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)&units=imperial")!
         case .icon(let id):
             return URL(string: "https://openweathermap.org/img/wn/\(id)@2x.png")!
+        case .fiveDay(let zipcode):
+            return URL(string: "https://api.openweathermap.org/data/2.5/forecast?zip=\(zipcode),us&appid=\(apiKey)")!
         }
     }
 }
@@ -58,5 +61,38 @@ struct NetworkingController {
             
             completion(.success(image))
         }
+    }
+    
+    func getFiveDay(for zipcode: Int, completion: @escaping (Result<[DayWeather], Error>) -> Void) {
+        let request = URLRequest(url: Endpoint.fiveDay(zipcode: zipcode).composedURL())
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                completion(.failure(error!))
+                return
+            }
+            
+            guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? JSON else {
+                completion(.failure(NetworkingError()))
+                return
+            }
+            
+            guard let city = json["city"] as? JSON, let cityName = city["name"] as? String, let list = json["list"] as? [JSON] else {
+                completion(.failure(NetworkingError()))
+                return
+            }
+            
+            var result = [DayWeather]()
+            for (index, dayJson) in list.enumerated() {
+                guard index == 0 || index % 8 == 0 else { continue }
+                guard let currentCondition = CurrentWeather(from: dayJson, cityName: cityName) else { continue }
+                guard let dateString = dayJson["dt_txt"] as? String, let day = dateString.split(separator: " ").first else { continue }
+                
+                result.append(DayWeather(date: String(day), condition: currentCondition))
+            }
+
+            completion(.success(result))
+            
+        }.resume()
     }
 }
