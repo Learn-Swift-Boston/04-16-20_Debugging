@@ -8,7 +8,7 @@ enum Endpoint {
     func composedURL() -> URL {
         switch self {
         case .current(let lat, let lon):
-            return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lon)&lon=\(lat)&appid=\(apiKey)&units=imperial")!
+            return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial")!
         case .icon(let id):
             return URL(string: "https://openweathermap.org/img/wn/\(id)@2x.png")!
         case .fiveDay(let zipcode):
