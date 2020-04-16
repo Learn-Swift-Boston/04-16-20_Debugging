@@ -132,6 +132,9 @@
                             <searchBar contentMode="redraw" placeholder="US Postal Code" translatesAutoresizingMaskIntoConstraints="NO" id="MpN-gR-kUT">
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits" textContentType="postal-code"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nhc-DR-IaM" id="IKg-Xq-Z4h"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wfv-QB-AeD">
                                 <rect key="frame" x="0.0" y="144" width="414" height="669"/>
