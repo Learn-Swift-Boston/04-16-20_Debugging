@@ -60,7 +60,7 @@ struct NetworkingController {
             }
             
             completion(.success(image))
-        }
+        }.resume()
     }
     
     func getFiveDay(for zipcode: Int, completion: @escaping (Result<[DayWeather], Error>) -> Void) {
