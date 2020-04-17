@@ -22,7 +22,7 @@ class FiveDayViewController: UIViewController {
 
 extension FiveDayViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, let zipcode = Int(text) else { return }
+        guard let zipcode = searchBar.text else { return }
         NetworkingController().getFiveDay(for: zipcode) { (result) in
             switch result {
             case .success(let dayWeathers):

@@ -3,7 +3,7 @@ import UIKit
 enum Endpoint {
     case current(lat: Double, lon: Double)
     case icon(id: String)
-    case fiveDay(zipcode: Int)
+    case fiveDay(zipcode: String)
     
     func composedURL() -> URL {
         switch self {
@@ -63,7 +63,7 @@ struct NetworkingController {
         }.resume()
     }
     
-    func getFiveDay(for zipcode: Int, completion: @escaping (Result<[DayWeather], Error>) -> Void) {
+    func getFiveDay(for zipcode: String, completion: @escaping (Result<[DayWeather], Error>) -> Void) {
         let request = URLRequest(url: Endpoint.fiveDay(zipcode: zipcode).composedURL())
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
