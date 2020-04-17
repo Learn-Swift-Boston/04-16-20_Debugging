@@ -22,6 +22,7 @@ class CurrentViewController: UIViewController {
                 self.conditionLabel.text = currentWeather.condition
                 self.feelsLike.text = "\(currentWeather.feelsLike)"
                 self.windSpeed.text = "\(currentWeather.windSpeed)"
+                self.fetchIcon(id: currentWeather.iconId)
             }
         }
     }
@@ -53,7 +54,6 @@ class CurrentViewController: UIViewController {
                 self.shouldFetchLocation = true
             case .success(let weather):
                 self.currentWeather = weather
-                self.fetchIcon(id: weather.iconId)
             }
         }
     }
