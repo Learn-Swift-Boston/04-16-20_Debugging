@@ -8,11 +8,13 @@ enum Endpoint {
     func composedURL() -> URL {
         switch self {
         case .current(let lat, let lon):
+            // Rule of threes: imperial unit parameter is also used in five-day forecast. If you need it in a third place, consider refactoring.
             return URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial")!
         case .icon(let id):
             return URL(string: "https://openweathermap.org/img/wn/\(id)@2x.png")!
         case .fiveDay(let zipcode):
-            return URL(string: "https://api.openweathermap.org/data/2.5/forecast?zip=\(zipcode),us&appid=\(apiKey)")!
+            // Rule of threes: imperial unit parameter is also used in current forecast. If you need it in a third place, consider refactoring.
+            return URL(string: "https://api.openweathermap.org/data/2.5/forecast?zip=\(zipcode),us&appid=\(apiKey)&units=imperial")!
         }
     }
 }
